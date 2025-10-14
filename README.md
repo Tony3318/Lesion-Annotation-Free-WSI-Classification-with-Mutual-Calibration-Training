@@ -37,3 +37,41 @@ Only predictions with **confidence > 0.7** are retained; noise-class results are
 ---
 
 ## 🧩 Architecture
+Input WSIs → Patch Extraction → Two Subset Training
+↓
+Model A ↔ Model B (Cross-Prediction)
+↓
+Noise-Aware Relabeling (14 + 14 Classes)
+↓
+Dual 28-Class Models
+↓
+Confidence-Weighted Voting → Final Prediction
+
+
+---
+
+## 🚀 Results
+
+| Metric | Baseline | Proposed |
+|:-------|:----------|:----------|
+| Accuracy | 78.67% | **82.29%** |
+| F1-score | 0.76 | **0.81** |
+
+### 🧱 Ablation Study
+| Variant | Description | Accuracy |
+|----------|--------------|-----------|
+| Dual-Model (Consensus Only) | Both models must agree | 82.10% |
+| Dual-Model + Weighted Voting | Without noise classes | 81.14% |
+| **Proposed (Noise-aware + Voting)** | Final version | **82.29%** |
+
+---
+
+## 🔍 Model Interpretability
+The model identifies histopathological features consistent with expert pathology:
+- **Basal Cell Carcinoma:** Palisading cell nests and irregular dark-purple clusters  
+- **Melanoma:** Atypical melanocytes with melanin deposition  
+- **Squamous Cell Carcinoma:** Keratin pearls and clustered atypical cells  
+- **Noise Class:** Normal connective or adipose tissue  
+
+---
+
